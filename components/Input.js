@@ -13,6 +13,7 @@ export default function Input( { focus }) {
             onChangeText={(changedText) => {
                 setText(changedText);
             }}
+            autoFocus={focus}
         />
     )
 }

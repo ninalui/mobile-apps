@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, Text } from 'react-native';
 
 export default function Input( { focus }) {
     const [text, setText] = useState('');
+    const [count, setCount] = useState(0);
     return (
+        <>
         <TextInput
             autoCorrect={true}
             keyboardType="default"
@@ -12,8 +14,11 @@ export default function Input( { focus }) {
             value={text}
             onChangeText={(changedText) => {
                 setText(changedText);
+                setCount(changedText.length);
             }}
             autoFocus={focus}
         />
+        <Text>Character count: {count}</Text>
+        </>
     )
 }

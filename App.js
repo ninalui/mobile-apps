@@ -6,12 +6,13 @@ import Input from './components/Input';
 
 export default function App() {
   const appName = "My app!";
+  const inputFocus = true;
 
   return (
     <View style={styles.container}>
       {/* <Text>Welcome to {appName}</Text> */}
       <Header name={appName} />
-      <Input />
+      <Input focus={inputFocus}/>
       <StatusBar style="auto" />
     </View>
   );

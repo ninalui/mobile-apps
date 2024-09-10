@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 
-export default function Inputt() {
+export default function Input( { focus }) {
     const [text, setText] = useState('');
     return (
         <TextInput

@@ -14,7 +14,7 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
     function handleCancel() {
         Alert.alert('Are you sure you want to cancel?', 'Press OK to cancel adding a goal', [
             { text: 'Cancel', style: 'cancel', },
-            { text: 'OK', onPress: () => {cancelHandler()} },
+            { text: 'OK', onPress: () => { cancelHandler() } },
         ]);
     };
 
@@ -43,15 +43,20 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                     count < 3 ? <Text>Please type more than 3 characters</Text> : <Text>Thank you</Text>
                 )}
 
-                <Button
-                    title='Cancel'
-                    onPress={handleCancel}
-                />
-
-                <Button
-                    title='Confirm'
-                    onPress={handleConfirm}
-                />
+                <View style={styles.buttonRow}>
+                    <View style={styles.padding}>
+                        <Button
+                            title='Cancel'
+                            onPress={handleCancel}
+                        />
+                    </View>
+                    <View style={styles.padding}>
+                        <Button
+                            title='Confirm'
+                            onPress={handleConfirm}
+                        />
+                    </View>
+                </View>
             </View>
         </Modal>
     )
@@ -69,5 +74,12 @@ const styles = StyleSheet.create({
         padding: 5,
         color: 'blue',
         borderColor: 'purple',
-    }
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    padding: {
+        padding: 10,
+    },
 });

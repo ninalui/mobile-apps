@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { TextInput, Text } from 'react-native';
+import { TextInput, Text, Button } from 'react-native';
 
 export default function Input({ focus }) {
     const [text, setText] = useState('');
     const [count, setCount] = useState(0);
     const [isFocused, setIsFocused] = useState(focus);
+
+    function handleConfirm(){
+        console.log(text)
+    }
+
     return (
         <>
             <TextInput
@@ -28,6 +33,11 @@ export default function Input({ focus }) {
             ) : (
                 count < 3 ? <Text>Please type more than 3 characters</Text> : <Text>Thank you</Text>
             )}
+            
+            <Button
+                title='Confirm'
+                onPress={handleConfirm}
+            /> 
         </>
     )
 }

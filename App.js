@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 
@@ -9,18 +9,21 @@ export default function App() {
   const inputFocus = true;
 
   const [inputtedText, setInputtedText] = useState('')
+  const [showModal, setShowModal] = useState(false);
 
   function handleInputData(inputData) {
-    console.log("App.js", inputData);
+    // console.log("App.js", inputData);
     setInputtedText(inputData);
+    setShowModal(false);
   }
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header name={appName} />
-      <Input focus={inputFocus} inputHandler={handleInputData}/>
+      <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} />
       <Text>{inputtedText}</Text>
+      <Button title="Add a Goal" onPress={() => setShowModal(true)} />
     </View>
   );
 }

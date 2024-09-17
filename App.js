@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 
@@ -18,13 +18,17 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      <Header name={appName} />
-      <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} />
-      <Text>{inputtedText}</Text>
-      <Button title="Add a Goal" onPress={() => setShowModal(true)} />
-    </View>
+      <View style={styles.topView}>
+        <Header name={appName} />
+        <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} />
+        <Button title="Add a Goal" onPress={() => setShowModal(true)} />
+      </View>
+      <View style={styles.bottomView}>
+        <Text style={styles.text}>{inputtedText}</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -32,7 +36,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  topView: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bottomView: {
+    flex: 4,
+    backgroundColor: '#d5a',
+    alignItems: 'center',
   },
 });

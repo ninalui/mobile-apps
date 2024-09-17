@@ -8,13 +8,20 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
 
     function handleConfirm() {
         // console.log(text);
+        setText('');
         inputHandler(text);
     };
 
     function handleCancel() {
         Alert.alert('Are you sure you want to cancel?', 'Press OK to cancel adding a goal', [
             { text: 'Cancel', style: 'cancel', },
-            { text: 'OK', onPress: () => { cancelHandler() } },
+            {
+                text: 'OK',
+                onPress: () => {
+                    setText('');
+                    cancelHandler()
+                }
+            },
         ]);
     };
 
@@ -36,13 +43,14 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                     onSubmitEditing={() => setIsFocused(false)}
                 />
                 {/* focus: show character count
-            blur: show message based on count < 3 */}
+                    blur: show message based on count < 3 */}
                 {isFocused ? (
                     count > 0 ? <Text>Character count: {count}</Text> : null
                 ) : (
                     count < 3 ? <Text>Please type more than 3 characters</Text> : <Text>Thank you</Text>
                 )}
 
+                {/* cancel and confirm buttons */}
                 <View style={styles.buttonRow}>
                     <View style={styles.padding}>
                         <Button

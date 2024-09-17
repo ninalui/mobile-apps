@@ -19,7 +19,7 @@ export default function Input({ focus, inputHandler, showModal }) {
                 <TextInput
                     autoCorrect={true}
                     keyboardType="default"
-                    style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
+                    style={styles.input}
                     placeholder="Enter text here"
                     value={text}
                     onChangeText={(changedText) => {
@@ -54,4 +54,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    input: {
+        borderWidth: 2, 
+        padding: 5,
+        color: 'blue',
+        borderColor: 'purple',
+    }
 });

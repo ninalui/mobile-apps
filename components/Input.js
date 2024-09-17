@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, Text, Button, View, StyleSheet, Modal, Alert } from 'react-native';
+import { TextInput, Text, Button, View, StyleSheet, Modal, Alert, Image } from 'react-native';
 
 export default function Input({ focus, inputHandler, showModal, cancelHandler }) {
     const [text, setText] = useState('');
@@ -30,6 +30,19 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
     return (
         <Modal animationType='slide' visible={showModal}>
             <View style={styles.container}>
+                <Image 
+                    style={styles.image}
+                    source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'
+                    }}
+                    alt='Target Icon - URL source'
+                />
+                <Image  
+                    style={styles.image}
+                    source={require('../assets/target.png')}
+                    alt='Target Icon - local source'
+                />
+
                 <TextInput
                     autoCorrect={true}
                     keyboardType="default"
@@ -93,4 +106,9 @@ const styles = StyleSheet.create({
     padding: {
         padding: 10,
     },
+    image: {
+        width: 100,
+        height: 100,
+        marginBottom: 10,
+    }
 });

@@ -9,6 +9,7 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
     function handleConfirm() {
         // console.log(text);
         setText('');
+        setCount(0);
         inputHandler(text);
     };
 
@@ -19,6 +20,7 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                 text: 'OK',
                 onPress: () => {
                     setText('');
+                    setCount(0);
                     cancelHandler()
                 }
             },
@@ -62,6 +64,7 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                         <Button
                             title='Confirm'
                             onPress={handleConfirm}
+                            disabled={count < 3}
                         />
                     </View>
                 </View>

@@ -28,57 +28,64 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
     };
 
     return (
-        <Modal animationType='slide' visible={showModal}>
+
+        <Modal
+            animationType='slide'
+            visible={showModal}
+            transparent={true}
+        >
             <View style={styles.container}>
-                <Image 
-                    style={styles.image}
-                    source={{
+                <View style={styles.modal}>
+                    <Image
+                        style={styles.image}
+                        source={{
                             uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'
-                    }}
-                    alt='Target Icon - URL source'
-                />
-                <Image  
-                    style={styles.image}
-                    source={require('../assets/target.png')}
-                    alt='Target Icon - local source'
-                />
+                        }}
+                        alt='Target Icon - URL source'
+                    />
+                    <Image
+                        style={styles.image}
+                        source={require('../assets/target.png')}
+                        alt='Target Icon - local source'
+                    />
 
-                <TextInput
-                    autoCorrect={true}
-                    keyboardType="default"
-                    style={styles.input}
-                    placeholder="Enter text here"
-                    value={text}
-                    onChangeText={(changedText) => {
-                        setText(changedText);
-                        setCount(changedText.length);
-                    }}
-                    autoFocus={focus}
-                    onFocus={() => setIsFocused(true)}
-                    onSubmitEditing={() => setIsFocused(false)}
-                />
-                {/* focus: show character count
+                    <TextInput
+                        autoCorrect={true}
+                        keyboardType="default"
+                        style={styles.input}
+                        placeholder="Enter text here"
+                        value={text}
+                        onChangeText={(changedText) => {
+                            setText(changedText);
+                            setCount(changedText.length);
+                        }}
+                        autoFocus={focus}
+                        onFocus={() => setIsFocused(true)}
+                        onSubmitEditing={() => setIsFocused(false)}
+                    />
+                    {/* focus: show character count
                     blur: show message based on count < 3 */}
-                {isFocused ? (
-                    count > 0 ? <Text>Character count: {count}</Text> : null
-                ) : (
-                    count < 3 ? <Text>Please type more than 3 characters</Text> : <Text>Thank you</Text>
-                )}
+                    {isFocused ? (
+                        count > 0 ? <Text>Character count: {count}</Text> : null
+                    ) : (
+                        count < 3 ? <Text>Please type more than 3 characters</Text> : <Text>Thank you</Text>
+                    )}
 
-                {/* cancel and confirm buttons */}
-                <View style={styles.buttonRow}>
-                    <View style={styles.padding}>
-                        <Button
-                            title='Cancel'
-                            onPress={handleCancel}
-                        />
-                    </View>
-                    <View style={styles.padding}>
-                        <Button
-                            title='Confirm'
-                            onPress={handleConfirm}
-                            disabled={count < 3}
-                        />
+                    {/* cancel and confirm buttons */}
+                    <View style={styles.buttonRow}>
+                        <View style={styles.padding}>
+                            <Button
+                                title='Cancel'
+                                onPress={handleCancel}
+                            />
+                        </View>
+                        <View style={styles.padding}>
+                            <Button
+                                title='Confirm'
+                                onPress={handleConfirm}
+                                disabled={count < 3}
+                            />
+                        </View>
                     </View>
                 </View>
             </View>
@@ -89,7 +96,6 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -110,5 +116,12 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         marginBottom: 10,
-    }
+    },
+    modal: {
+        backgroundColor: 'whitesmoke',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20, 
+    },
 });

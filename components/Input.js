@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
-import { TextInput, Text, Button, View, StyleSheet, Modal } from 'react-native';
+import { TextInput, Text, Button, View, StyleSheet, Modal, Alert } from 'react-native';
 
-export default function Input({ focus, inputHandler, showModal }) {
+export default function Input({ focus, inputHandler, showModal, cancelHandler }) {
     const [text, setText] = useState('');
     const [count, setCount] = useState(0);
     const [isFocused, setIsFocused] = useState(focus);
 
-    
-
     function handleConfirm() {
         // console.log(text);
         inputHandler(text);
-    }
+    };
+
+    function handleCancel() {
+        Alert.alert('Are you sure you want to cancel?', 'Press OK to cancel adding a goal', [
+            { text: 'Cancel', style: 'cancel', },
+            { text: 'OK', onPress: () => {cancelHandler()} },
+        ]);
+    };
 
     return (
         <Modal animationType='slide' visible={showModal}>
@@ -39,6 +44,11 @@ export default function Input({ focus, inputHandler, showModal }) {
                 )}
 
                 <Button
+                    title='Cancel'
+                    onPress={handleCancel}
+                />
+
+                <Button
                     title='Confirm'
                     onPress={handleConfirm}
                 />
@@ -55,7 +65,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        borderWidth: 2, 
+        borderWidth: 2,
         padding: 5,
         color: 'blue',
         borderColor: 'purple',

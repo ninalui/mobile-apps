@@ -41,13 +41,15 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                         source={{
                             uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'
                         }}
-                        alt='Target Icon - URL source'
+                        alt='Icon of a red target with arrow in the middle and a green checkmark in the bottom left corner - remote URL source'
                     />
                     <Image
                         style={styles.image}
                         source={require('../assets/target.png')}
-                        alt='Target Icon - local source'
+                        alt='Icon of a red target with arrow in the middle and a green checkmark in the bottom left corner - local source'
                     />
+                    {/* Image alt prop is text providing brief description of the image being displayed. 
+                        This provides accessibility as it is read by screen-readers or other assitive technologies. */}
 
                     <TextInput
                         autoCorrect={true}

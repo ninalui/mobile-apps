@@ -28,6 +28,11 @@ export default function App() {
     setShowModal(false);
   };
 
+  function handleDelete(deleteId) {
+    let newGoals = goals.filter(goal => goal.id !== deleteId);
+    setGoals(newGoals);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -50,7 +55,7 @@ export default function App() {
         contentContainerStyle={styles.listContainer}
         data={goals}
         renderItem={itemData => (
-          <GoalItem goal={itemData.item} />
+          <GoalItem goal={itemData.item} deleteHandler={handleDelete} />
         )} />
       </View>
     </SafeAreaView>
@@ -69,7 +74,7 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     flex: 4,
-    backgroundColor: '#d5a',
+    backgroundColor: '#dcd',
   },
   listContainer: {
     alignItems: "center",

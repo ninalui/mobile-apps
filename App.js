@@ -67,6 +67,7 @@ export default function App() {
         <FlatList
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={<Text style={styles.title}>No goals to show</Text>}
+        ListHeaderComponent={goals.length > 0 ? <Text style={styles.title}>My Goals</Text> : null }
         ListFooterComponent={goals.length > 0 ? <Button title="Delete all" onPress={() => handleDeleteAll()} /> : null }
         ItemSeparatorComponent={() => <View style={styles.divider} /> }
         data={goals}

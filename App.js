@@ -54,6 +54,7 @@ export default function App() {
         </ScrollView> */}
         <FlatList
         contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={<Text style={styles.title}>No goals to show</Text>}
         data={goals}
         renderItem={itemData => (
           <GoalItem goal={itemData.item} deleteHandler={handleDelete} />
@@ -78,6 +79,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#dcd',
   },
   listContainer: {
-    alignItems: "center",
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    color: 'indigo',
+    padding: 5,
   }
 });

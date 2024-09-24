@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
+import GoalItem from './components/GoalItem';
 
 export default function App() {
   const appName = "My app!";
@@ -49,9 +50,7 @@ export default function App() {
         contentContainerStyle={styles.listContainer}
         data={goals}
         renderItem={itemData => (
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>{itemData.item.text}</Text>
-          </View>
+          <GoalItem goal={itemData.item} />
         )} />
       </View>
     </SafeAreaView>
@@ -71,16 +70,6 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 4,
     backgroundColor: '#d5a',
-  },
-  text: {
-    fontSize: 100,
-    color: 'purple',
-  },
-  textContainer: {
-    borderRadius: 5,
-    backgroundColor: '#999',
-    padding: 5,
-    marginTop: 10,
   },
   listContainer: {
     alignItems: "center",

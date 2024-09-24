@@ -10,10 +10,16 @@ export default function App() {
 
   const [inputtedText, setInputtedText] = useState('Study');
   const [showModal, setShowModal] = useState(false);
+  const [goals, setGoals] = useState([]);
 
   function handleInputData(inputData) {
     // console.log("App.js", inputData);
-    setInputtedText(inputData);
+    // replacing with new obj instead
+    // setInputtedText(inputData); 
+    let newGoal = { text: inputData, id: Math.random() };
+    setGoals((prevGoals) => {
+      return [...prevGoals, newGoal]
+    });
     setShowModal(false);
   };
 
@@ -26,12 +32,12 @@ export default function App() {
       <StatusBar style="auto" />
       <View style={styles.topView}>
         <Header name={appName} />
-        <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} cancelHandler={handleCancel}/>
+        <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} cancelHandler={handleCancel} />
         <Button title="Add a Goal" onPress={() => setShowModal(true)} />
       </View>
       <View style={styles.bottomView}>
         <View style={styles.textContainer}>
-        <Text style={styles.text}>{inputtedText}</Text>
+          <Text style={styles.text}>{inputtedText}</Text>
         </View>
       </View>
     </SafeAreaView>

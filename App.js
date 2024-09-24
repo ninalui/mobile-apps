@@ -8,21 +8,25 @@ export default function App() {
   const appName = "My app!";
   const inputFocus = true;
 
-  const [inputtedText, setInputtedText] = useState('')
+  const [inputtedText, setInputtedText] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   function handleInputData(inputData) {
     // console.log("App.js", inputData);
     setInputtedText(inputData);
     setShowModal(false);
-  }
+  };
+
+  function handleCancel() {
+    setShowModal(false);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.topView}>
         <Header name={appName} />
-        <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} />
+        <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} cancelHandler={handleCancel}/>
         <Button title="Add a Goal" onPress={() => setShowModal(true)} />
       </View>
       <View style={styles.bottomView}>

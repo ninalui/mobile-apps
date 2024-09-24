@@ -36,9 +36,13 @@ export default function App() {
         <Button title="Add a Goal" onPress={() => setShowModal(true)} />
       </View>
       <View style={styles.bottomView}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{inputtedText}</Text>
-        </View>
+        {goals.map((goal) => {
+          return (
+            <View style={styles.textContainer} key={goal.id}>
+              <Text style={styles.text}>{goal.text}</Text>
+            </View> 
+          );
+        })}
       </View>
     </SafeAreaView>
   );

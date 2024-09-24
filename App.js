@@ -29,8 +29,9 @@ export default function App() {
   };
 
   function handleDelete(deleteId) {
-    let newGoals = goals.filter(goal => goal.id !== deleteId);
-    setGoals(newGoals);
+    setGoals((prevGoals) => {
+      return prevGoals.filter(goal => goal.id !== deleteId);
+    });
   };
 
   return (

@@ -8,7 +8,7 @@ export default function App() {
   const appName = "My app!";
   const inputFocus = true;
 
-  const [inputtedText, setInputtedText] = useState('');
+  const [inputtedText, setInputtedText] = useState('Study');
   const [showModal, setShowModal] = useState(false);
 
   function handleInputData(inputData) {
@@ -30,7 +30,9 @@ export default function App() {
         <Button title="Add a Goal" onPress={() => setShowModal(true)} />
       </View>
       <View style={styles.bottomView}>
+        <View style={styles.textContainer}>
         <Text style={styles.text}>{inputtedText}</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -52,7 +54,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: 'darkblue',
-    fontSize: 20
+    fontSize: 20,
+    color: 'purple',
+  },
+  textContainer: {
+    borderRadius: 5,
+    backgroundColor: '#999',
+    padding: 5,
+    marginTop: 5,
   }
 });

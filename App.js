@@ -55,6 +55,7 @@ export default function App() {
         <FlatList
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={<Text style={styles.title}>No goals to show</Text>}
+        ItemSeparatorComponent={() => <View style={styles.divider} /> }
         data={goals}
         renderItem={itemData => (
           <GoalItem goal={itemData.item} deleteHandler={handleDelete} />
@@ -85,5 +86,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'indigo',
     padding: 5,
+  },
+  divider: {
+    height: 5,
+    backgroundColor: 'grey',
+    marginBottom: 5,
+    marginTop: 15,
   }
 });

@@ -26,10 +26,12 @@ export default function App() {
           component={GoalDetails}
           options={
             ({ route }) => (
-              { title: route.params ? route.params.goal.text : 'More Details' },
-              { headerRight: () => (<Button title="Warning" onPress={() => console.log('warning')}/>) }
+              {
+                title: route.params ? route.params.goal.text : 'More Details',
+                headerRight: () => (<Button title="Warning" onPress={() => console.log('warning')} />)
+              }
             )
-          }
+            }
         />
       </Stack.Navigator>
     </NavigationContainer>

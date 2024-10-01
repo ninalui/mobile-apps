@@ -5,7 +5,7 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 
-export default function Home() {
+export default function Home({ navigation}) {
   const appName = "My app!";
   const inputFocus = true;
 
@@ -46,6 +46,10 @@ export default function Home() {
     ]);
   };
 
+  function handleGoalPress() {
+    navigation.navigate('Details');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -73,7 +77,7 @@ export default function Home() {
         ItemSeparatorComponent={() => <View style={styles.divider} /> }
         data={goals}
         renderItem={itemData => (
-          <GoalItem goal={itemData.item} deleteHandler={handleDelete} />
+          <GoalItem goal={itemData.item} deleteHandler={handleDelete} onPressHandler={handleGoalPress} />
         )} />
       </View>
     </SafeAreaView>

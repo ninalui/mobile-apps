@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import Home from './components/Home'
@@ -24,7 +24,12 @@ export default function App() {
         <Stack.Screen
           name="Details"
           component={GoalDetails}
-          options={({ route }) => ({ title:  route.params ? route.params.goal.text : 'More Details' })}
+          options={
+            ({ route }) => (
+              { title: route.params ? route.params.goal.text : 'More Details' },
+              { headerRight: () => (<Button title="Warning" onPress={() => console.log('warning')}/>) }
+            )
+          }
         />
       </Stack.Navigator>
     </NavigationContainer>

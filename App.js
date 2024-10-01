@@ -8,6 +8,11 @@ import GoalDetails from './components/GoalDetails'
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  function getGoalDetailsTitle({ route }) {
+    return route.params ? route.params.goal.text : 'More Details';
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -20,7 +25,11 @@ export default function App() {
             headerTintColor: 'white',
           }}
         />
-        <Stack.Screen name="Details" component={GoalDetails} />
+        <Stack.Screen
+          name="Details"
+          component={GoalDetails}
+          options={({ route }) => ({ title: getGoalDetailsTitle({ route }) })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

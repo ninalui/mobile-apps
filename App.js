@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
 import Header from './components/Header';
 import Input from './components/Input';
 import GoalItem from './components/GoalItem';
@@ -34,6 +34,18 @@ export default function App() {
     });
   };
 
+  function handleDeleteAll() {
+    Alert.alert('Are you sure you want to delete all goals?', null,  [
+      { text: 'No', style: 'cancel', },
+      {
+        text: 'Yes',
+        onPress: () => {
+          setGoals([]);
+        }
+      },
+    ]);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -54,6 +66,11 @@ export default function App() {
         </ScrollView> */}
         <FlatList
         contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={<Text style={styles.title}>No goals to show</Text>}
+        ListHeaderComponent={goals.length > 0 ? <Text style={styles.title}>My Goals</Text> : null }
+        ListFooterComponent={goals.length > 0 ? <Button title="Delete all" onPress={() => handleDeleteAll()} /> : null }
+        ListFooterComponentStyle={styles.footerContainer}
+        ItemSeparatorComponent={() => <View style={styles.divider} /> }
         data={goals}
         renderItem={itemData => (
           <GoalItem goal={itemData.item} deleteHandler={handleDelete} />
@@ -78,6 +95,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#dcd',
   },
   listContainer: {
-    alignItems: "center",
-  }
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+    color: 'indigo',
+    padding: 5,
+  },
+  footerContainer: {
+    marginTop: 20,
+  },
+  divider: {
+    height: 5,
+    backgroundColor: 'grey',
+    marginBottom: 5,
+    marginTop: 15,
+  }, 
 });

@@ -46,8 +46,8 @@ export default function Home({ navigation}) {
     ]);
   };
 
-  function handleGoalPress() {
-    navigation.navigate('Details');
+  function handleGoalPress(goal) {
+    navigation.navigate('Details', { goal: goal });
   };
 
   return (

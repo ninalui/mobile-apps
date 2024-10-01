@@ -8,7 +8,7 @@ export default function GoalItem({ goal, deleteHandler, onPressHandler }) {
     };
 
     function handlePress() {
-        onPressHandler();
+        onPressHandler(goal);
     };
 
     return (

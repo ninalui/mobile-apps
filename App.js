@@ -31,7 +31,7 @@ export default function App() {
             ({ route }) => (
               {
                 title: route.params ? route.params.goal.text : 'More Details',
-                headerRight: () => (<Button title="Warning" onPress={() => console.log('warning')} />)
+                headerRight: () => (<Button title="Warning" />)
               }
             )
           }

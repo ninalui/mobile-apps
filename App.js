@@ -11,15 +11,18 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: 'purple',
+          },
+          headerTintColor: 'white',
+        }}
+      >
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{
-            title: 'My Goals',
-            headerStyle: { backgroundColor: 'purple' },
-            headerTintColor: 'white',
-          }}
+          options={{ title: 'My Goals' }}
         />
         <Stack.Screen
           name="Details"
@@ -28,10 +31,9 @@ export default function App() {
             ({ route }) => (
               {
                 title: route.params ? route.params.goal.text : 'More Details',
-                headerRight: () => (<Button title="Warning" onPress={() => console.log('warning')} />)
               }
             )
-            }
+          }
         />
       </Stack.Navigator>
     </NavigationContainer>

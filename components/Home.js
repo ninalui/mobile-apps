@@ -46,10 +46,6 @@ export default function Home({ navigation}) {
     ]);
   };
 
-  function handleGoalPress(goal) {
-    navigation.navigate('Details', { goal: goal });
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -77,7 +73,7 @@ export default function Home({ navigation}) {
         ItemSeparatorComponent={() => <View style={styles.divider} /> }
         data={goals}
         renderItem={itemData => (
-          <GoalItem goal={itemData.item} deleteHandler={handleDelete} onPressHandler={handleGoalPress} />
+          <GoalItem goal={itemData.item} deleteHandler={handleDelete} navigation={navigation} />
         )} />
       </View>
     </SafeAreaView>

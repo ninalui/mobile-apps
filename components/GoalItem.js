@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import PressableButton from "./PressableButton";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-export default function GoalItem({ goal, deleteHandler, navigation }) {
+export default function GoalItem({ goal, deleteHandler, navigation, onPressIn, onPressOut }) {
 
     function handleDelete() {
         deleteHandler(goal.id);
@@ -28,6 +28,8 @@ export default function GoalItem({ goal, deleteHandler, navigation }) {
             <Pressable
                 onPress={handlePress}
                 onLongPress={handleLongPress}
+                onPressIn={onPressIn}
+                onPressOut={onPressOut}
                 android_ripple={{ color: 'red', radius: 50 }}
                 style={({ pressed }) => [
                     styles.horizontalContainer,

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Button, Pressable } from "react-native";
+import PressableButton from "./PressableButton";
 
 export default function GoalItem({ goal, deleteHandler, navigation }) {
 
@@ -22,7 +23,13 @@ export default function GoalItem({ goal, deleteHandler, navigation }) {
                 ]}
             >
                 <Text style={styles.text}>{goal.text}</Text>
-                <Button title="X" color={"grey"} onPress={handleDelete} />
+                <PressableButton
+                    componentStyle={styles.deleteButton}
+                    pressHandler={handleDelete}
+                    pressedStyle={styles.pressedStyle}
+                >
+                    <Text style={styles.deleteText}>Delete</Text>
+                </PressableButton>
             </Pressable>
         </View>
     );
@@ -44,9 +51,15 @@ const styles = StyleSheet.create({
     horizontalContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-    }, 
+    },
     pressedStyle: {
         backgroundColor: 'darkmagenta',
         opacity: 0.25,
+    },
+    deleteButton: {
+        backgroundColor: 'grey',
+    },
+    deleteText: {
+        color: 'white',
     },
 });

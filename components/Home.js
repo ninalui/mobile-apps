@@ -79,11 +79,18 @@ export default function Home({ navigation }) {
           ListHeaderComponent={goals.length > 0 ? <Text style={styles.title}>My Goals</Text> : null}
           ListFooterComponent={goals.length > 0 ? <Button title="Delete all" onPress={() => handleDeleteAll()} /> : null}
           ListFooterComponentStyle={styles.footerContainer}
-          ItemSeparatorComponent={() => <View style={styles.divider} />}
+          ItemSeparatorComponent={({ highlighted }) => <View style={[styles.divider, highlighted && {backgroundColor: 'purple'}]} />}
           data={goals}
-          renderItem={itemData => (
-            <GoalItem goal={itemData.item} deleteHandler={handleDelete} navigation={navigation} />
-          )} />
+          // highlight separator when item selected 
+          renderItem={({ item, separators }) => (
+            <GoalItem 
+              goal={item} 
+              deleteHandler={handleDelete} 
+              navigation={navigation} 
+              onPressIn={() => separators.highlight()} 
+              onPressOut={() => separators.unhighlight()} />
+          )}
+        />
       </View>
     </SafeAreaView>
   );

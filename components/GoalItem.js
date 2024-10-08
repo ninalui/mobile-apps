@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Pressable } from "react-native";
 
 export default function GoalItem({ goal, deleteHandler, navigation }) {
 
@@ -13,9 +13,10 @@ export default function GoalItem({ goal, deleteHandler, navigation }) {
 
     return (
         <View style={styles.textContainer}>
-            <Text style={styles.text}>{goal.text}</Text>
-            <Button title="X" color={"grey"} onPress={handleDelete}/>
-            <Button title="i" color={"grey"} onPress={handlePress} />
+            <Pressable onPress={handlePress} style={styles.horizontalContainer}>
+                <Text style={styles.text}>{goal.text}</Text>
+                <Button title="X" color={"grey"} onPress={handleDelete} />
+            </Pressable>
         </View>
     );
 }
@@ -33,4 +34,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    horizontalContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    }
 });

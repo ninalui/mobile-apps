@@ -1,26 +1,33 @@
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import PressableButton from './PressableButton';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function GoalDetails({ navigation, route }) {
     const [textColor, setTextColor] = useState('black');
 
-    function moreDetailsHander() {
+    function moreDetailsHandler() {
         navigation.push('Details');
+    }
+
+    function warningHandler() {
+        setTextColor('red');
+        navigation.setOptions({
+            title: 'Warning!'
+        });
     }
 
     // on press, change text color and change header title
     useEffect(() => {
         navigation.setOptions({
             headerRight: () =>
-                <Button
-                    title="Warning"
-                    onPress={() => {
-                        setTextColor('red');
-                        navigation.setOptions({
-                            title: 'Warning!'
-                        });
-                    }}
-                />
+                <PressableButton
+                    componentStyle={styles.warningStyle}
+                    pressHandler={warningHandler}
+                    pressedStyle={styles.warningPressedStyle}
+                >
+                    <AntDesign name="warning" size={25} color="white" />
+                </PressableButton>
         })
     }, [navigation]);
 
@@ -34,8 +41,19 @@ export default function GoalDetails({ navigation, route }) {
 
             <Button
                 title="More Details"
-                onPress={moreDetailsHander}
+                onPress={moreDetailsHandler}
             />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    warningStyle: {
+        backgroundColor: 'purple',
+    }, 
+    warningPressedStyle: {
+        backgroundColor: 'red',
+        borderRadius: 5,
+        opacity: 0.25,
+    }
+});

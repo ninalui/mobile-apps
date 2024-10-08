@@ -4,8 +4,9 @@ import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Ale
 import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
+import PressableButton from './PressableButton';
 
-export default function Home({ navigation}) {
+export default function Home({ navigation }) {
   const appName = "My app!";
   const inputFocus = true;
 
@@ -35,7 +36,7 @@ export default function Home({ navigation}) {
   };
 
   function handleDeleteAll() {
-    Alert.alert('Are you sure you want to delete all goals?', null,  [
+    Alert.alert('Are you sure you want to delete all goals?', null, [
       { text: 'No', style: 'cancel', },
       {
         text: 'Yes',
@@ -52,7 +53,15 @@ export default function Home({ navigation}) {
       <View style={styles.topView}>
         <Header name={appName} />
         <Input focus={inputFocus} inputHandler={handleInputData} showModal={showModal} cancelHandler={handleCancel} />
-        <Button title="Add a Goal" onPress={() => setShowModal(true)} />
+
+        <PressableButton
+          componentStyle={styles.addButton}
+          pressedStyle={styles.addPressedStyle}
+          pressHandler={() => setShowModal(true)}
+        >
+          <Text style={styles.addText}>Add a Goal</Text>
+        </PressableButton>
+
       </View>
       <View style={styles.bottomView}>
         {/* <ScrollView contentContainerStyle={styles.listContainer}>
@@ -65,16 +74,16 @@ export default function Home({ navigation}) {
         })}
         </ScrollView> */}
         <FlatList
-        contentContainerStyle={styles.listContainer}
-        ListEmptyComponent={<Text style={styles.title}>No goals to show</Text>}
-        ListHeaderComponent={goals.length > 0 ? <Text style={styles.title}>My Goals</Text> : null }
-        ListFooterComponent={goals.length > 0 ? <Button title="Delete all" onPress={() => handleDeleteAll()} /> : null }
-        ListFooterComponentStyle={styles.footerContainer}
-        ItemSeparatorComponent={() => <View style={styles.divider} /> }
-        data={goals}
-        renderItem={itemData => (
-          <GoalItem goal={itemData.item} deleteHandler={handleDelete} navigation={navigation} />
-        )} />
+          contentContainerStyle={styles.listContainer}
+          ListEmptyComponent={<Text style={styles.title}>No goals to show</Text>}
+          ListHeaderComponent={goals.length > 0 ? <Text style={styles.title}>My Goals</Text> : null}
+          ListFooterComponent={goals.length > 0 ? <Button title="Delete all" onPress={() => handleDeleteAll()} /> : null}
+          ListFooterComponentStyle={styles.footerContainer}
+          ItemSeparatorComponent={() => <View style={styles.divider} />}
+          data={goals}
+          renderItem={itemData => (
+            <GoalItem goal={itemData.item} deleteHandler={handleDelete} navigation={navigation} />
+          )} />
       </View>
     </SafeAreaView>
   );
@@ -110,5 +119,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     marginBottom: 5,
     marginTop: 15,
-  }, 
+  },
+  addButton: {
+    backgroundColor: 'darkmagenta',
+    padding: 10,
+    borderRadius: 5,
+  },
+  addText: {
+    color: 'white',
+    fontSize: 18,
+  },
+  addPressedStyle: {
+    backgroundColor: 'grey',
+    opacity: 0.5,
+  }
 });

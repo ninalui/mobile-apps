@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Button, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import PressableButton from "./PressableButton";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function GoalItem({ goal, deleteHandler, navigation }) {
 
@@ -28,7 +29,7 @@ export default function GoalItem({ goal, deleteHandler, navigation }) {
                     pressHandler={handleDelete}
                     pressedStyle={styles.pressedStyle}
                 >
-                    <Text style={styles.deleteText}>Delete</Text>
+                    <MaterialIcons name="delete-outline" size={30} color="black" />
                 </PressableButton>
             </Pressable>
         </View>
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
+        padding: 5,
     },
     horizontalContainer: {
         flexDirection: 'row',

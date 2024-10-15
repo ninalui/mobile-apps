@@ -1,12 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
 import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PressableButton from './PressableButton';
+import { database } from '../Firebase/firebaseSetup';
+import { writeToDB, deleteFromDB, deleteAll } from '../Firebase/firestoreHelper';
+import { onSnapshot, collection, doc } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
+  // console.log(database);
   const appName = "My app!";
   const inputFocus = true;
 
@@ -14,14 +18,26 @@ export default function Home({ navigation }) {
   const [showModal, setShowModal] = useState(false);
   const [goals, setGoals] = useState([]);
 
+  // update to receive data from database
+  useEffect(() => {
+    onSnapshot(collection(database, 'goals'), (querySnapshot) => {
+      let newArray = [];
+      querySnapshot.forEach((docSnapshot) => {
+        newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+      });
+      setGoals(newArray);
+    });
+  }, []);
+
   function handleInputData(inputData) {
     // console.log("App.js", inputData);
     // replacing with new obj instead
     // setInputtedText(inputData); 
-    let newGoal = { text: inputData, id: Math.random() };
-    setGoals((prevGoals) => {
-      return [...prevGoals, newGoal]
-    });
+    let newGoal = { text: inputData };
+    writeToDB(newGoal, 'goals');
+    // setGoals((prevGoals) => {
+    //   return [...prevGoals, newGoal]
+    // });
     setShowModal(false);
   };
 
@@ -30,9 +46,10 @@ export default function Home({ navigation }) {
   };
 
   function handleDelete(deleteId) {
-    setGoals((prevGoals) => {
-      return prevGoals.filter(goal => goal.id !== deleteId);
-    });
+    deleteFromDB(deleteId, 'goals');
+    // setGoals((prevGoals) => {
+    //   return prevGoals.filter(goal => goal.id !== deleteId);
+    // });
   };
 
   function handleDeleteAll() {
@@ -41,8 +58,8 @@ export default function Home({ navigation }) {
       {
         text: 'Yes',
         onPress: () => {
-          setGoals([]);
-        }
+          deleteAll('goals');
+        },
       },
     ]);
   };
@@ -79,15 +96,15 @@ export default function Home({ navigation }) {
           ListHeaderComponent={goals.length > 0 ? <Text style={styles.title}>My Goals</Text> : null}
           ListFooterComponent={goals.length > 0 ? <Button title="Delete all" onPress={() => handleDeleteAll()} /> : null}
           ListFooterComponentStyle={styles.footerContainer}
-          ItemSeparatorComponent={({ highlighted }) => <View style={[styles.divider, highlighted && {backgroundColor: 'purple'}]} />}
+          ItemSeparatorComponent={({ highlighted }) => <View style={[styles.divider, highlighted && { backgroundColor: 'purple' }]} />}
           data={goals}
           // highlight separator when item selected 
           renderItem={({ item, separators }) => (
-            <GoalItem 
-              goal={item} 
-              deleteHandler={handleDelete} 
-              navigation={navigation} 
-              onPressIn={() => separators.highlight()} 
+            <GoalItem
+              goal={item}
+              deleteHandler={handleDelete}
+              navigation={navigation}
+              onPressIn={() => separators.highlight()}
               onPressOut={() => separators.unhighlight()} />
           )}
         />

@@ -5,8 +5,11 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PressableButton from './PressableButton';
+import { database } from '../Firebase/firebaseSetup';
+import { writeToDB } from '../Firebase/firestoreHelper';
 
 export default function Home({ navigation }) {
+  // console.log(database);
   const appName = "My app!";
   const inputFocus = true;
 
@@ -18,12 +21,15 @@ export default function Home({ navigation }) {
     // console.log("App.js", inputData);
     // replacing with new obj instead
     // setInputtedText(inputData); 
-    let newGoal = { text: inputData, id: Math.random() };
-    setGoals((prevGoals) => {
-      return [...prevGoals, newGoal]
-    });
+    let newGoal = { text: inputData };
+    writeToDB(newGoal, 'goals');
+    // setGoals((prevGoals) => {
+    //   return [...prevGoals, newGoal]
+    // });
     setShowModal(false);
   };
+
+  
 
   function handleCancel() {
     setShowModal(false);
@@ -79,15 +85,15 @@ export default function Home({ navigation }) {
           ListHeaderComponent={goals.length > 0 ? <Text style={styles.title}>My Goals</Text> : null}
           ListFooterComponent={goals.length > 0 ? <Button title="Delete all" onPress={() => handleDeleteAll()} /> : null}
           ListFooterComponentStyle={styles.footerContainer}
-          ItemSeparatorComponent={({ highlighted }) => <View style={[styles.divider, highlighted && {backgroundColor: 'purple'}]} />}
+          ItemSeparatorComponent={({ highlighted }) => <View style={[styles.divider, highlighted && { backgroundColor: 'purple' }]} />}
           data={goals}
           // highlight separator when item selected 
           renderItem={({ item, separators }) => (
-            <GoalItem 
-              goal={item} 
-              deleteHandler={handleDelete} 
-              navigation={navigation} 
-              onPressIn={() => separators.highlight()} 
+            <GoalItem
+              goal={item}
+              deleteHandler={handleDelete}
+              navigation={navigation}
+              onPressIn={() => separators.highlight()}
               onPressOut={() => separators.unhighlight()} />
           )}
         />

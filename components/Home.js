@@ -6,7 +6,7 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 import PressableButton from './PressableButton';
 import { database } from '../Firebase/firebaseSetup';
-import { writeToDB, deleteFromDB } from '../Firebase/firestoreHelper';
+import { writeToDB, deleteFromDB, deleteAll } from '../Firebase/firestoreHelper';
 import { onSnapshot, collection, doc } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
     onSnapshot(collection(database, 'goals'), (querySnapshot) => {
       let newArray = [];
       querySnapshot.forEach((docSnapshot) => {
-        newArray.push({...docSnapshot.data(), id: docSnapshot.id});
+        newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
       });
       setGoals(newArray);
     });
@@ -58,8 +58,8 @@ export default function Home({ navigation }) {
       {
         text: 'Yes',
         onPress: () => {
-          setGoals([]);
-        }
+          deleteAll('goals');
+        },
       },
     ]);
   };

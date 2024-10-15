@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
 import Header from './Header';
 import Input from './Input';
@@ -7,6 +7,7 @@ import GoalItem from './GoalItem';
 import PressableButton from './PressableButton';
 import { database } from '../Firebase/firebaseSetup';
 import { writeToDB } from '../Firebase/firestoreHelper';
+import { onSnapshot, collection, doc } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
   // console.log(database);
@@ -16,6 +17,17 @@ export default function Home({ navigation }) {
   const [inputtedText, setInputtedText] = useState('Study');
   const [showModal, setShowModal] = useState(false);
   const [goals, setGoals] = useState([]);
+
+  // update to receive data from database
+  useEffect(() => {
+    onSnapshot(collection(database, 'goals'), (querySnapshot) => {
+      let newArray = [];
+      querySnapshot.forEach((docSnapshot) => {
+        newArray.push({...docSnapshot.data(), id: docSnapshot.id});
+      });
+      setGoals(newArray);
+    });
+  }, []);
 
   function handleInputData(inputData) {
     // console.log("App.js", inputData);
@@ -28,8 +40,6 @@ export default function Home({ navigation }) {
     // });
     setShowModal(false);
   };
-
-  
 
   function handleCancel() {
     setShowModal(false);

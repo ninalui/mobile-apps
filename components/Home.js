@@ -6,7 +6,7 @@ import Input from './Input';
 import GoalItem from './GoalItem';
 import PressableButton from './PressableButton';
 import { database } from '../Firebase/firebaseSetup';
-import { writeToDB } from '../Firebase/firestoreHelper';
+import { writeToDB, deleteFromDB } from '../Firebase/firestoreHelper';
 import { onSnapshot, collection, doc } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
@@ -46,9 +46,10 @@ export default function Home({ navigation }) {
   };
 
   function handleDelete(deleteId) {
-    setGoals((prevGoals) => {
-      return prevGoals.filter(goal => goal.id !== deleteId);
-    });
+    deleteFromDB(deleteId, 'goals');
+    // setGoals((prevGoals) => {
+    //   return prevGoals.filter(goal => goal.id !== deleteId);
+    // });
   };
 
   function handleDeleteAll() {

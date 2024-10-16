@@ -2,6 +2,7 @@ import { View, Text, Button, StyleSheet } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import PressableButton from './PressableButton';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { updateDB } from '../Firebase/firestoreHelper';
 
 export default function GoalDetails({ navigation, route }) {
     const [textColor, setTextColor] = useState('black');
@@ -15,6 +16,7 @@ export default function GoalDetails({ navigation, route }) {
         navigation.setOptions({
             title: 'Warning!'
         });
+        updateDB(route.params.goal.id, { warning: true }, 'goals');
     }
 
     // on press, change text color and change header title

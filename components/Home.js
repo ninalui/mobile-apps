@@ -20,13 +20,16 @@ export default function Home({ navigation }) {
 
   // update to receive data from database
   useEffect(() => {
-    onSnapshot(collection(database, 'goals'), (querySnapshot) => {
+    const unsubscribe = onSnapshot(collection(database, 'goals'), (querySnapshot) => {
       let newArray = [];
       querySnapshot.forEach((docSnapshot) => {
         newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
       });
       setGoals(newArray);
     });
+    return () => {
+      unsubscribe();
+    }
   }, []);
 
   function handleInputData(inputData) {

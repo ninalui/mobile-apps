@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react'
 import PressableButton from './PressableButton';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { updateDB } from '../Firebase/firestoreHelper';
+import GoalUsers from './GoalUsers';
 
 export default function GoalDetails({ navigation, route }) {
+
     const [textColor, setTextColor] = useState('black');
 
     function moreDetailsHandler() {
@@ -45,6 +47,8 @@ export default function GoalDetails({ navigation, route }) {
                 title="More Details"
                 onPress={moreDetailsHandler}
             />
+
+            <GoalUsers id={route.params.goal.id}/>
         </View>
     )
 }
@@ -52,7 +56,7 @@ export default function GoalDetails({ navigation, route }) {
 const styles = StyleSheet.create({
     warningStyle: {
         backgroundColor: 'purple',
-    }, 
+    },
     warningPressedStyle: {
         backgroundColor: 'red',
         borderRadius: 5,

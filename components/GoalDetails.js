@@ -48,7 +48,7 @@ export default function GoalDetails({ navigation, route }) {
                 onPress={moreDetailsHandler}
             />
 
-            <GoalUsers />
+            <GoalUsers id={route.params.goal.id}/>
         </View>
     )
 }

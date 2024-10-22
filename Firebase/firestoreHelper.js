@@ -1,11 +1,11 @@
 import { database } from "./firebaseSetup";
-import { collection, addDoc, doc, deleteDoc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, addDoc, doc, deleteDoc, getDocs, updateDoc, QuerySnapshot } from "firebase/firestore";
 
 
 export async function writeToDB(data, collectionName) {
     try {
         const docRef = await addDoc(collection(database, collectionName), data);
-        console.log("Document written with ID: ", docRef.id);
+        // console.log("Document written with ID: ", docRef.id);
     }
     catch (err) {
         console.log("write to db error", err);
@@ -42,5 +42,23 @@ export async function updateDB(id, data, collectionName) {
     }
     catch (err) {
         console.log("update db error", err);
+    }
+}
+
+export async function getAllDocuments(collectionName) {
+    try {
+        const querySnapshot = await getDocs(collection(database, collectionName));
+        const data = [];
+        if (querySnapshot.empty) {
+            console.log("No documents found in ", collectionName);
+            return data;
+        }
+        querySnapshot.forEach((docSnapshot) => {
+            data.push(docSnapshot.data());
+        });
+        return data;
+    }
+    catch (err) {
+        console.log("get all documents error", err);
     }
 }

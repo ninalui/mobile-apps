@@ -1,12 +1,26 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { writeToDB } from '../Firebase/firestoreHelper';
+import { getAllDocuments, writeToDB } from '../Firebase/firestoreHelper';
 
 export default function GoalUsers({ id }) {
     const [users, setUsers] = useState([]);
     useEffect(() => {
         async function fetchData() {
             try {
+                // check if data is already in database
+                // and use that if so
+                const dataFromDB = await getAllDocuments(`goals/${id}/users`);
+                if (dataFromDB.length) {
+                    console.log('reading from db');
+                    setUsers(
+                        dataFromDB.map((user) => {
+                            return user.name
+                        }
+                        ));
+                    return;
+                }
+                console.log('fetching from api');
+                // if not, fetch from api 
                 const response = await fetch(
                     'https://jsonplaceholder.typicode.com/users'
                 );

@@ -45,7 +45,7 @@ export default function Signup({ navigation }) {
     };
 
     return (
-        <View>
+        <View style={styles.container}>
             <Text>Email Address</Text>
             <TextInput
                 style={styles.inputField}
@@ -86,12 +86,16 @@ export default function Signup({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        margin: 20,
+    },
     inputField: {
-        borderBottomWidth: 2,
+        borderWidth: 2,
         borderColor: 'darkslateblue',
         textAlign: 'center',
         color: 'darkslateblue',
         fontWeight: 'bold',
         padding: 10,
+        marginBottom: 20,
     },
 });

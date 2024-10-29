@@ -1,5 +1,6 @@
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import React, { useState } from 'react'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
@@ -9,6 +10,27 @@ export default function Login({ navigation }) {
         navigation.replace('Signup');
     };
 
+    const loginHandler = async () => {
+        // validation:
+        // 1. no fields are empty
+        if (!email || !password) {
+            Alert.alert('Please fill in all fields');
+            return;
+        }
+        // 2. email is valid
+        if (!email.includes('@') || !email.includes('.')) {
+            Alert.alert('Invalid email address');
+            return;
+        }
+        try {
+            const auth = getAuth();
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            console.log('User signed in', user);
+        } catch (error) {
+            console.log('error signing in', error);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -31,6 +53,7 @@ export default function Login({ navigation }) {
 
             <Button
                 title="Login"
+                onPress={loginHandler}
             />
 
             <Button

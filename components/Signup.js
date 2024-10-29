@@ -1,6 +1,7 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import React, { useState } from 'react'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../Firebase/firebaseSetup';
 
 export default function Signup({ navigation }) {
     const [email, setEmail] = useState('');
@@ -34,7 +35,6 @@ export default function Signup({ navigation }) {
             return;
         }
         try {
-            const auth = getAuth();
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log('User created');

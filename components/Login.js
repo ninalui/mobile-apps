@@ -1,6 +1,7 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import React, { useState } from 'react'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../Firebase/firebaseSetup';
 
 export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
@@ -23,7 +24,6 @@ export default function Login({ navigation }) {
             return;
         }
         try {
-            const auth = getAuth();
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log('User signed in', user);

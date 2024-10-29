@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -15,22 +15,22 @@ export default function Signup({ navigation }) {
         // validation: 
         // 1. no fields are empty
         if (!email || !password || !confirmPassword) {
-            alert('Please fill in all fields');
+            Alert.alert('Please fill in all fields');
             return;
         }
         // 2. password and confirm password match
         if (password !== confirmPassword) {
-            alert('Passwords do not match');
+            Alert.alert('Passwords do not match');
             return;
         }
         // 3. email is valid 
         if (!email.includes('@') || !email.includes('.')) {
-            alert('Invalid email address');
+            Alert.alert('Invalid email address');
             return;
         }
         // 4. password is at least 6 characters long
         if (password.length < 6) {
-            alert('Password must be at least 6 characters long');
+            Alert.alert('Password must be at least 6 characters long');
             return;
         }
         try {
@@ -38,7 +38,6 @@ export default function Signup({ navigation }) {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log('User created');
-            navigation.replace('Home');
         } catch (error) {
             console.log('error creating user', error);
         }

@@ -11,6 +11,7 @@ import { auth } from './Firebase/firebaseSetup'
 import Profile from './components/Profile'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import PressableButton from './components/PressableButton'
+import { signOut } from 'firebase/auth';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,16 @@ const AppStack = <>
   <Stack.Screen
     name="Profile"
     component={Profile}
+    options={{
+      headerRight: () => (
+        <PressableButton
+          pressHandler={() => signOut(auth)}
+          componentStyle={{ backgroundColor: 'purple' }}
+        >
+          <AntDesign name="logout" size={25} color="white" />
+        </PressableButton>
+      )
+    }}
   />
 </>
 

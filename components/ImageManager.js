@@ -2,7 +2,7 @@ import { View, Button, Image, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker';
 
-export default function ImageManager() {
+export default function ImageManager({ getImageUri }) {
     const [response, requestPermission] = ImagePicker.useCameraPermissions();
     const [imageUri, setImageUri] = useState('');
 
@@ -31,6 +31,8 @@ export default function ImageManager() {
                 allowsEditing: true,
             });
             setImageUri(result.assets[0].uri);
+            // send image uri back to Input.js
+            getImageUri(result.assets[0].uri);
         } catch (err) {
             console.log(err);
         }

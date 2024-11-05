@@ -6,12 +6,13 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
     const [text, setText] = useState('');
     const [count, setCount] = useState(0);
     const [isFocused, setIsFocused] = useState(focus);
+    const [imageUri, setImageUri] = useState('');
 
     function handleConfirm() {
         // console.log(text);
         setText('');
         setCount(0);
-        inputHandler(text);
+        inputHandler({text, imageUri});
     };
 
     function handleCancel() {
@@ -26,6 +27,10 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                 }
             },
         ]);
+    };
+
+    function getImageUri(uri) {
+        setImageUri(uri);
     };
 
     return (
@@ -74,7 +79,9 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                         count < 3 ? <Text>Please type more than 3 characters</Text> : <Text>Thank you</Text>
                     )}
 
-                    <ImageManager />
+                    <ImageManager
+                        getImageUri={getImageUri}
+                    />
 
                     {/* cancel and confirm buttons */}
                     <View style={styles.buttonRow}>

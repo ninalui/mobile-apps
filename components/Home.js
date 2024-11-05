@@ -47,7 +47,9 @@ export default function Home({ navigation }) {
     // console.log("App.js", inputData);
     // replacing with new obj instead
     // setInputtedText(inputData); 
-    let newGoal = { text: inputData };
+    console.log(inputData);
+    let newGoal = { text: inputData.text };
+    console.log(newGoal);
     // adding info about owner of goal (to control access)
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
     writeToDB(newGoal, 'goals');

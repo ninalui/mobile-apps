@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextInput, Text, Button, View, StyleSheet, Modal, Alert, Image } from 'react-native';
+import ImageManager from './ImageManager';
 
 export default function Input({ focus, inputHandler, showModal, cancelHandler }) {
     const [text, setText] = useState('');
@@ -73,6 +74,8 @@ export default function Input({ focus, inputHandler, showModal, cancelHandler })
                         count < 3 ? <Text>Please type more than 3 characters</Text> : <Text>Thank you</Text>
                     )}
 
+                    <ImageManager />
+
                     {/* cancel and confirm buttons */}
                     <View style={styles.buttonRow}>
                         <View style={styles.padding}>
@@ -124,6 +127,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20, 
+        padding: 20,
     },
 });

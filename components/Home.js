@@ -7,7 +7,8 @@ import GoalItem from './GoalItem';
 import PressableButton from './PressableButton';
 import { database } from '../Firebase/firebaseSetup';
 import { writeToDB, deleteFromDB, deleteAll } from '../Firebase/firestoreHelper';
-import { onSnapshot, collection, doc } from 'firebase/firestore';
+import { onSnapshot, collection, doc, query, where } from 'firebase/firestore';
+import { auth } from '../Firebase/firebaseSetup';
 
 export default function Home({ navigation }) {
   // console.log(database);
@@ -20,13 +21,23 @@ export default function Home({ navigation }) {
 
   // update to receive data from database
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(database, 'goals'), (querySnapshot) => {
-      let newArray = [];
-      querySnapshot.forEach((docSnapshot) => {
-        newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+    // should only query user's data, not entire collection 
+    const unsubscribe = onSnapshot(
+      query(
+        collection(database, 'goals'),
+        where('owner', '==', auth.currentUser.uid)
+      ),
+      (querySnapshot) => {
+        let newArray = [];
+        querySnapshot.forEach((docSnapshot) => {
+          newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+        });
+        setGoals(newArray);
+      },
+      (error) => {
+        console.log(error);
+        Alert.alert(error.message);
       });
-      setGoals(newArray);
-    });
     return () => {
       unsubscribe();
     }
@@ -36,7 +47,11 @@ export default function Home({ navigation }) {
     // console.log("App.js", inputData);
     // replacing with new obj instead
     // setInputtedText(inputData); 
-    let newGoal = { text: inputData };
+    console.log(inputData);
+    let newGoal = { text: inputData.text };
+    console.log(newGoal);
+    // adding info about owner of goal (to control access)
+    newGoal = { ...newGoal, owner: auth.currentUser.uid };
     writeToDB(newGoal, 'goals');
     // setGoals((prevGoals) => {
     //   return [...prevGoals, newGoal]

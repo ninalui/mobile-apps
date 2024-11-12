@@ -5,10 +5,11 @@ import Header from './Header';
 import Input from './Input';
 import GoalItem from './GoalItem';
 import PressableButton from './PressableButton';
-import { database } from '../Firebase/firebaseSetup';
+import { database, storage } from '../Firebase/firebaseSetup';
 import { writeToDB, deleteFromDB, deleteAll } from '../Firebase/firestoreHelper';
 import { onSnapshot, collection, doc, query, where } from 'firebase/firestore';
 import { auth } from '../Firebase/firebaseSetup';
+import { ref, uploadBytesResumable } from 'firebase/storage';
 
 export default function Home({ navigation }) {
   // console.log(database);
@@ -43,15 +44,42 @@ export default function Home({ navigation }) {
     }
   }, []);
 
-  function handleInputData(inputData) {
-    // console.log("App.js", inputData);
-    // replacing with new obj instead
-    // setInputtedText(inputData); 
-    console.log(inputData);
+  async function fetchAndUploadImage(uri) {
+    try {
+      // fetch image
+      const response = await fetch(uri);
+      // throw error if response is not ok
+      if (!response.ok) {
+        throw new Error('An error occurred while fetching the image');
+      }
+      const blob = await response.blob();
+      // upload image to storage
+      const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+      const imageRef =  ref(storage, `images/${imageName}`)
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      return uploadResult.metadata.fullPath;
+    } catch (error) {
+      console.error('Error uploading image: ', error);
+    }
+  }
+
+  async function handleInputData(inputData) {
+    console.log('input data', inputData);
+    
+    // upload image to storage if exists
+    let uri = '';
+    if (inputData.imageUri) {
+      uri = await fetchAndUploadImage(inputData.imageUri);
+    }
+
+    // add text to goal
     let newGoal = { text: inputData.text };
-    console.log(newGoal);
     // adding info about owner of goal (to control access)
     newGoal = { ...newGoal, owner: auth.currentUser.uid };
+    // add image uri to goal if exists
+    if (uri) {
+      newGoal = { ...newGoal, uri: uri };
+    }
     writeToDB(newGoal, 'goals');
     // setGoals((prevGoals) => {
     //   return [...prevGoals, newGoal]

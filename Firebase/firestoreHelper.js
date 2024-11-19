@@ -1,5 +1,5 @@
 import { database } from "./firebaseSetup";
-import { collection, addDoc, doc, deleteDoc, getDocs, updateDoc, QuerySnapshot } from "firebase/firestore";
+import { collection, addDoc, doc, deleteDoc, getDocs, updateDoc, QuerySnapshot, setDoc } from "firebase/firestore";
 
 
 export async function writeToDB(data, collectionName) {
@@ -42,6 +42,15 @@ export async function updateDB(id, data, collectionName) {
     }
     catch (err) {
         console.log("update db error", err);
+    }
+}
+
+export async function setDB(id, data, collectionName) {
+    try { 
+        await setDoc(doc(database, collectionName, id), data, { merge: true });
+        console.log("Document set with ID: ", id);
+    } catch (err) {
+        console.log("set db error", err);
     }
 }
 

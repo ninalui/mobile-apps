@@ -1,14 +1,36 @@
 import { View, Button, Image, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Location from 'expo-location'
 import { Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { getDocumentById, setDB } from '../Firebase/firestoreHelper';
+import { auth } from '../Firebase/firebaseSetup';
 
 export default function LocationManager() {
     const [response, requestPermission] = Location.useForegroundPermissions();
     const [location, setLocation] = useState(null);
     const navigation = useNavigation();
+    const route = useRoute();
     const windowWidth = Dimensions.get('window').width;
+
+    useEffect(() => {
+        async function getUserData() {
+            const userData = await getDocumentById(auth.currentUser.uid, "users");
+            if (userData && userData.location) {
+                setLocation(userData.location);
+            }
+        }
+        // only fetch data if no selected location in route params
+        if (!route.params) {
+            getUserData();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (route.params) {
+            setLocation(route.params.selectedLocation);
+        }
+    }, [route.params]);
 
     async function verifyPermission() {
         try {
@@ -36,6 +58,12 @@ export default function LocationManager() {
         }
     };
 
+    async function saveLocationHandler() {
+        //call updateDB, save location in user doc
+        setDB(auth.currentUser.uid, { location }, 'users');
+        navigation.navigate('Home');
+    };
+
     return (
         <View>
             <Button title='Get My Location' onPress={locateUserHandler} />
@@ -46,6 +74,7 @@ export default function LocationManager() {
                 style={{ width: windowWidth, height: 200 }}
             />
             }
+            <Button title='Save Location' onPress={saveLocationHandler} />
         </View>
     )
 }

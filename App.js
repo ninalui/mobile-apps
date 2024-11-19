@@ -13,6 +13,13 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import PressableButton from './components/PressableButton'
 import { signOut } from 'firebase/auth';
 import Map from './components/Map'
+import * as Notifications from 'expo-notifications'
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => (
+    { shouldShowAlert: true }
+  )
+});
 
 const Stack = createNativeStackNavigator();
 

@@ -10,6 +10,7 @@ import { writeToDB, deleteFromDB, deleteAll } from '../Firebase/firestoreHelper'
 import { onSnapshot, collection, doc, query, where } from 'firebase/firestore';
 import { auth } from '../Firebase/firebaseSetup';
 import { ref, uploadBytesResumable } from 'firebase/storage';
+import * as Notifications from 'expo-notifications';
 
 export default function Home({ navigation }) {
   // console.log(database);
@@ -19,6 +20,16 @@ export default function Home({ navigation }) {
   const [inputtedText, setInputtedText] = useState('Study');
   const [showModal, setShowModal] = useState(false);
   const [goals, setGoals] = useState([]);
+
+  useEffect(() => {
+    async function getToken() {
+    const pushToken = await Notifications.getExpoPushTokenAsync({
+      // need projectID from expo dev
+    });
+    console.log(pushToken);
+    } 
+    getToken();
+  }, []);
 
   // update to receive data from database
   useEffect(() => {

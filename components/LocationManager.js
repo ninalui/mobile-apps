@@ -15,13 +15,22 @@ export default function LocationManager() {
 
     useEffect(() => {
         async function getUserData() {
-            const userData = await getDocumentById(auth.currentUser.uid, 'users');
-            if (userData.location) {
+            const userData = await getDocumentById(auth.currentUser.uid, "users");
+            if (userData && userData.location) {
                 setLocation(userData.location);
             }
         }
-        getUserData();
+        // only fetch data if no selected location in route params
+        if (!route.params) {
+            getUserData();
+        }
     }, []);
+
+    useEffect(() => {
+        if (route.params) {
+            setLocation(route.params.selectedLocation);
+        }
+    }, [route.params]);
 
     async function verifyPermission() {
         try {
@@ -51,7 +60,7 @@ export default function LocationManager() {
 
     async function saveLocationHandler() {
         //call updateDB, save location in user doc
-        setDB(auth.currentUser.uid, {location}, 'users');
+        setDB(auth.currentUser.uid, { location }, 'users');
         navigation.navigate('Home');
     };
 

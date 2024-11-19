@@ -15,7 +15,7 @@ export default function GoalDetails({ navigation, route }) {
     useEffect(() => {
         async function downloadImage() {
             try {
-                if (route.params.goal.uri) {
+                if (route.params?.goal.uri) {
                     const imageRef = ref(storage, route.params.goal.uri);
                     const url = await getDownloadURL(imageRef);
                     setImageUrl(url);
@@ -28,7 +28,9 @@ export default function GoalDetails({ navigation, route }) {
     }, []);
 
     function moreDetailsHandler() {
-        navigation.push('Details');
+        if (route.params) {
+            navigation.push('Details');
+        }
     }
 
     function warningHandler() {

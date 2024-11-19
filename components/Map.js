@@ -21,7 +21,7 @@ export default function Map() {
                 });
             }}
         >
-            <Marker coordinate={selectedLocation} />
+            {selectedLocation && <Marker coordinate={selectedLocation} />}
         </MapView>
     )
 }

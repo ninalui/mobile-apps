@@ -1,5 +1,5 @@
 import { database } from "./firebaseSetup";
-import { collection, addDoc, doc, deleteDoc, getDocs, updateDoc, QuerySnapshot, setDoc } from "firebase/firestore";
+import { collection, addDoc, doc, deleteDoc, getDocs, updateDoc, QuerySnapshot, setDoc, getDoc } from "firebase/firestore";
 
 
 export async function writeToDB(data, collectionName) {
@@ -69,5 +69,20 @@ export async function getAllDocuments(collectionName) {
     }
     catch (err) {
         console.log("get all documents error", err);
+    }
+}
+
+export async function getDocumentById(id, collectionName) {
+    try {
+        const docRef = doc(database, collectionName, id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data();
+        } else {
+            console.log("No such document!");
+        }
+    }
+    catch (err) {
+        console.log("get document by id error", err);
     }
 }
